@@ -4,14 +4,21 @@ resultDetails = {
             11078609,
             11079412,
         ],
-        "credits" : []
+        "credits" : [
+            22.5,
+            21.5,
+
+        ]
     },
     "mech":{
         "resultIds" : [
             11078609,
             11079412,
         ],
-        "credits" : []
+        "credits" : [
+            22.5,
+            21.5,
+        ]
     },
     "cse":{
         "resultIds" : [
@@ -30,3 +37,62 @@ resultDetails = {
         ]
     }
 }
+
+function substring(s, start, end){
+    try {
+        return s.split(start)[1].split(end)[0];
+    } catch (error) {
+        return "Not found"
+    }
+}
+
+function get_result(resultid, rollno){
+    const baseUrl = 'https://results.pupexamination.ac.in/t8/results/results.php';
+
+    const queryParams = {
+        'rslstid': resultid,
+        'ROLL': rollno,
+        'submit': 'Submit',
+    };
+
+    const queryString = new URLSearchParams(queryParams).toString();
+    const apiUrl = `${baseUrl}?${queryString}`;
+
+    const headers = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        'sec-ch-ua': '"Chromium";v="116", "Not)A;Brand";v="24", "Google Chrome";v="116"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+    };
+
+    fetch(apiUrl, {
+    method: 'GET',
+    headers: headers
+    })
+    .then(response => {
+        if (response.ok) {
+        return response.text();
+        } else {
+        throw new Error('Network Error');
+        }
+    })
+    .then(data => {
+        // Handle the JSON data here
+        console.log(data);
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch
+        console.error('Fetch error:', error);
+    });
+}
+
+get_result(resultDetails["cse"][0], 12004019);
