@@ -11,7 +11,9 @@ resultDetails = {
         "credits" : [
             22.5,
             21.5,
-
+            24,
+            24,
+            30
         ]
     },
     "mech":{
