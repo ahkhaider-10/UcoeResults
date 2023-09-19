@@ -69,6 +69,10 @@ function substring(s, start, end){
     }
 }
 
+function generateResultURL(rollno, resultId){
+    return `https://results.pupexamination.ac.in/t8/results/results.php?rslstid=${resultId}&ROLL=${rollno}&submit=Submit`;
+}
+
 function extract_details(content){
     const result_html = substring(content, "<div id=\"mainPrint\" class=\"pbiuc", "<!-- <button onclick=\"document.getElementById('mainPrint')");
     
@@ -96,7 +100,7 @@ function extract_details(content){
 }
 
 async function get_result(resultid, rollno) {
-    const baseUrl = `https://results.pupexamination.ac.in/t8/results/results.php?rslstid=${resultid}&ROLL=${rollno}&submit=Submit`;
+    const baseUrl = generateResultURL(rollno, resultid);
   
     const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(baseUrl)}`;
   
@@ -158,15 +162,17 @@ function createTable(semResultIds){
         createAndAppendCell(row, '-');
         createAndAppendCell(row, '-');
         createAndAppendCell(row, '-');
+        createAndAppendCell(row, '-');
     }
 
 }
 
-function updateRow(rowid, semResult, semCredit){
+function updateRow(rowid, semResult, semCredit, rollno){
     const resultRow = document.getElementById(rowid);
     resultRow.cells[1].innerHTML = semResult.sgpa;
     resultRow.cells[2].innerHTML = semResult.cgpa + "/" + semCredit;
     resultRow.cells[3].innerHTML = semResult.result;
+    resultRow.cells[4].innerHTML = `<a target="_blank" href="${generateResultURL(rollno, rowid)}">🔗</a>`;
 }
 
 function updateNames(result){
@@ -229,7 +235,7 @@ async function handleSubmit(event){
 
         if(i==0){updateNames(semResult);}
 
-        updateRow(semResultIds[i], semResult, semCredits[i]);
+        updateRow(semResultIds[i], semResult, semCredits[i], rollno);
 
         allSemesterResults.push(semResult);
     }
