@@ -43,6 +43,7 @@ resultDetails = {
             11081441,
             11081634,
             11082094,
+            11082461,
         ],
         "credits" : [
             21.5,
@@ -52,14 +53,15 @@ resultDetails = {
             31,
             25,
             15,
+            20,
         ]
     }
 }
 
 const branchNames = {
-    "CSE (Computer Science)" : "cse",
-    "CE (Civil)" : "civil",
-    "ME (Mechanical)" : "mech"
+    "CSE (Computer Science)": "cse",
+    "CE (Civil)": "civil",
+    "ME (Mechanical)": "mech"
 }
 
 function createAndAppendCell(row, content) {
